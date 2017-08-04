@@ -3,7 +3,7 @@ import cspaceThreshImg
 import cv2
 import numpy as np
 
-img = cv2.imread('3.png')
+img = cv2.imread('hsv_space.png')
 
 mask, masked_img, cspace_label, lowerb, upperb = cspaceSliders.display(img, multi_window=False)
 

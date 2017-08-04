@@ -35,13 +35,20 @@ def imgHsvFilt(img):
     filtered_img[Mask_indices] =255
     return filtered_img
 
+frame_in = to_pil(retinex_adjust(retinex(from_pil(frame_in))))
+
 def from_pil(pimg):
+
+    pimg = cv2.cvtColor(pimg, cv2.COLOR_BGR2RGB)
+    pimg = Image.fromarray(pimg)
     pimg = pimg.convert(mode='RGB')
     nimg = np.asarray(pimg)
     nimg.flags.writeable = True
     return nimg
 
 def to_pil(nimg):
+
+
 
     #return Image.fromarray(np.uint8(nimg))
     rgb_nimg = Image.fromarray(np.uint8(nimg)).convert('RGB')
@@ -51,6 +58,13 @@ def to_pil(nimg):
     return opencv_img
 
 def retinex(nimg):
+
+    pimg = cv2.cvtColor(pimg, cv2.COLOR_BGR2RGB)
+    pimg = Image.fromarray(pimg)
+    pimg = pimg.convert(mode='RGB')
+    nimg = np.asarray(pimg)
+    nimg.flags.writeable = True
+
     nimg = nimg.transpose(2, 0, 1).astype(np.uint32)
     mu_g = nimg[1].max()
     nimg[0] = np.minimum(nimg[0]*(mu_g/float(nimg[0].max())),255)
@@ -61,6 +75,18 @@ def retinex_adjust(nimg):
     """
     from 'Combining Gray World and Retinex Theory for Automatic White Balance in Digital Photography'
     """
+
+    pimg = cv2.cvtColor(pimg, cv2.COLOR_BGR2RGB)
+    pimg = Image.fromarray(pimg)
+    pimg = pimg.convert(mode='RGB')
+    nimg = np.asarray(pimg)
+    nimg.flags.writeable = True
+
+    nimg = nimg.transpose(2, 0, 1).astype(np.uint32)
+    mu_g = nimg[1].max()
+    nimg[0] = np.minimum(nimg[0]*(mu_g/float(nimg[0].max())),255)
+    nimg[2] = np.minimum(nimg[2]*(mu_g/float(nimg[2].max())),255)
+
     nimg = nimg.transpose(2, 0, 1).astype(np.uint32)
     sum_r = np.sum(nimg[0])
     sum_r2 = np.sum(nimg[0]**2)
@@ -79,4 +105,9 @@ def retinex_adjust(nimg):
     coefficient = np.linalg.solve(np.array([[sum_b2,sum_b],[max_b2,max_b]]),
                                              np.array([sum_g,max_g]))
     nimg[1] = np.minimum((nimg[1]**2)*coefficient[0] + nimg[1]*coefficient[1],255)
-    return nimg.transpose(1, 2, 0).astype(np.uint8)
+    #return Image.fromarray(np.uint8(nimg))
+    rgb_nimg = Image.fromarray(np.uint8(nimg)).convert('RGB')
+    opencv_img = np.array(rgb_nimg)
+    # Convert RGB to BGR
+    opencv_img = opencv_img[:, :, ::-1].copy()
+    return opencv_img
