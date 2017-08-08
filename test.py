@@ -22,7 +22,7 @@ for test_idx,test_color in enumerate(color2test):
     total_fn_test = 0
     for idx,color in enumerate(colorset):
 
-        target_folder = os.path.join('exp/color_data/21',color)
+        target_folder = os.path.join('exp/color_data/test',color)
 
 
         for file in os.listdir(target_folder):
@@ -30,7 +30,7 @@ for test_idx,test_color in enumerate(color2test):
                 if(file[-3:] == 'jpg'):
 
                     frame_in = cv2.imread(os.path.join(target_folder, file))
-                    res = PS_search_color.color_detection(frame_in)
+                    res = PS_search_coloㄋr.color_detection(frame_in)
                     #case: input image that is not test_color
                     if test_idx != idx:
                         total_fp_test += 1

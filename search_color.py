@@ -70,10 +70,10 @@ class PS_Search_Color:
         nimg = nimg.transpose(1, 2, 0).astype(np.uint8)
 
         rgb_nimg = Image.fromarray(np.uint8(nimg)).convert('RGB')
-        opencv_img = np.array(rgb_nimg)
-        opencv_img = opencv_img[:, :, ::-1].copy()
+        awb_img = np.array(rgb_nimg)
+        awb_img = awb_img[:, :, ::-1].copy()
 
-        return opencv_img
+        return awb_img
 
     def get_roi(self,frame_in,isNight,color):
 
@@ -129,15 +129,15 @@ class PS_Search_Color:
 
             # loop over each boundary pair for this color
             for (lower, upper) in zip(color_boundaries[0::2],color_boundaries[1::2]):
-
                 # detecting...
                 mask = mask + cv2.inRange(hsv, np.array(lower),np.array(upper))
-                if float(max_value) != 0:
-                    Val = float(mask.sum()) / float(max_value)
-                else:
-                    Val = 0
-                if Val > color_profile[status]['threshold'][color]:
-                    res[idx] = True
+
+            if float(max_value) != 0:
+                Val = float(mask.sum()) / float(max_value)
+            else:
+                Val = 0
+            if round(Val,2) >= color_profile[status]['threshold'][color]:
+                res[idx] = True
 
         return res
 
