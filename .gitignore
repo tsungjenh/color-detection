@@ -1,0 +1,8 @@
+.DS_Store
+__pycache__/
+*.pyc
+*.jpeg
+*.png
+*.gif
+*.jpg
+!hsv_space.png
