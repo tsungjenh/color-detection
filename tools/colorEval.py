@@ -12,12 +12,11 @@ from search_color import *
 
 #search_color = PS_Search_Color()
 
-
-
 def colorEval(base_folder,color2Eval = ['all'],search_color = Search_Color()):
 
 	color2test = []
 	colorset = ['red','yellow','blue','green','white','black',]
+
 	if 'all' in color2Eval:
 		color2test = colorset
 	else:
@@ -28,7 +27,6 @@ def colorEval(base_folder,color2Eval = ['all'],search_color = Search_Color()):
 				print color + "'s detection not exists"
 
 	fn = fp = [0] * len(color2test)
-
 
 	for test_idx,test_color in enumerate(color2test):
     		fn = 0
@@ -61,4 +59,5 @@ def colorEval(base_folder,color2Eval = ['all'],search_color = Search_Color()):
 
 if __name__ == '__main__':
 	base_folder = '/home/max/ironyun_proj/color-detection/exp/color_data/21'
+
 	colorEval(base_folder)
