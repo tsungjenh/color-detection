@@ -13,9 +13,9 @@ Please have opencv2, PIL, numpy, matplotlib intalled in your system
 
 ## Running the tests
 
-'''
+```
 python search_color.py
-'''
+```
 
 ### Running the evaluation
 
