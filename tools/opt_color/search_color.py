@@ -18,7 +18,6 @@ class Search_Color:
         roiWid = 10
         roiEdg = roiScale
 
-
         src_height, src_width, src_channels = frame_in.shape
 
         roiX = int(src_width / roiWid)
@@ -28,18 +27,15 @@ class Search_Color:
 
         frame = frame_in#[roiY : roiY+roiHeight, roiX : roiX+roiWidth]
 
-
         if detect_type == 'car':
             frame,lightMask = imgFilt(frame,filtratio)
             blockedPxl = sum(np.count_nonzero(e) for e in lightMask)
         else:
             blockedPxl = 0
 
-
         src_height, src_width, src_channels = frame.shape
 
         max_value = ((src_height*src_width)-blockedPxl)*255
-
 
         # Convert BGR to HSV
         hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
@@ -60,10 +56,19 @@ class Search_Color:
             lower = np.array([0,color_param[0],0])
             upper = np.array([179,255,color_param[2]])
             mask  = mask + cv2.inRange(hsv, lower, upper)
+        elif color2opt in ['lightskin']:
+            lower = np.array([0, color_param[0],color_param[1]])
+            upper = np.array([color_param[2],color_param[3],255])
+            mask  = cv2.inRange(hsv,lower,upper)
+
+        elif color2opt in ['darkskin']:
+            lower = np.array([0, color_param[0],0])
+            upper = np.array([color_param[1],color_param[2],color_param[3]])
+            mask  = cv2.inRange(hsv,lower,upper)
 
         else: #others
-            lower = np.array([143,37, 20])
-            upper = np.array([210, 255, 255])
+            lower = np.array([color_param[0],color_param[1], color_param[2]])
+            upper = np.array([color_param[3], 255, 255])
             mask = cv2.inRange(hsv, lower, upper)
 
         if(float(max_value) != 0):
@@ -72,5 +77,6 @@ class Search_Color:
             Val = 0
 
         res = round(Val,2)
+
 
         return res

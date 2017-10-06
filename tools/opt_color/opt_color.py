@@ -32,7 +32,7 @@ def objective(args):
 
     total,this_color_count,fp,fn = sample_color(thr, roiScale, filtratio, color_param,color)
     tp = total - fp - fn
-    beta = 10
+    beta = 5
 
     f1_score = float(((1 + beta**2) * tp)) / ((1 + beta**2)*tp + beta**2 * fn + fp)
 

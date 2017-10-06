@@ -10,7 +10,6 @@ def sample_color(threshold, roiScale, filtratio, color_param, color2opt):
 
     clr_idx = colorset.index(color2opt)
 
-    color_to_be_tested = ['red','yellow','blue','green','white','black']
     this_color_count = 0
     fp = 0
     fn = 0
