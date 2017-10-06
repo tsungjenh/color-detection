@@ -27,7 +27,7 @@ python tools/color_Eval.py
 
 ### Running optimization over a new dataset
 
-'''
+```
 mv 'your dataset' tools/opt_color/.
 config target folder in tools/opt_color/config.py
 cd tools/opt_color
@@ -41,4 +41,4 @@ Add additional notes about how to deploy this on a live system
 
 ## Authors
 
-* **TsungJen Hsu**
+TsungJen Hsu
