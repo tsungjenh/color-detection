@@ -7,7 +7,7 @@ if __name__ == '__main__':
     target_folder = 'data/car/21'
     search_color = Search_Color()
     for idx, color in enumerate(color_to_be_tested):
-        for file in os.listdir(target_folder + color):
+        for file in os.listdir(os.path.join(target_folder,color)):
             if(file != os.path.basename("__file__")):
                 if(file[-3:] == 'jpg'):
                     origin_img = cv2.imread(target_folder + color + '/' + file)
