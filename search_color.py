@@ -88,7 +88,7 @@ class Search_Color:
         if detect_type in do_white_balance[status]:
             frame_in    = auto_white_balance(frame_in)
 
-        res = [False] * len(color_to_be_detected)
+        res = ''
 
         # loop over all the color to be detected
         for (idx, color) in enumerate(color_to_be_detected):
@@ -128,11 +128,14 @@ class Search_Color:
                 Val = 0
 
             if round(Val,2) >= cur_profile['threshold'][color]:
-                res[idx] = True
+                if res != '':
+                    res = res + ','
+                res = res + color
+
         return res
 
 
 if __name__ == '__main__':
     search_color = Search_Color()
     img = cv2.imread('test.jpg')
-    print search_color.color_detection(img,'person')
+    print search_color.color_detection(img,'car')

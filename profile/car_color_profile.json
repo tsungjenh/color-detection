@@ -1,4 +1,4 @@
-{ "color_to_be_detected": ["red","yellow","blue","green","white","black"],
+{ "color_to_be_detected": ["red","black","yellow","blue","green","white"],
     "day": {"range": {
     "red":    [[156, 31, 30], [188, 255, 255]],
     "yellow": [[10, 30, 60], [37, 255, 255]],

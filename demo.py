@@ -3,13 +3,15 @@ import os
 import cv2
 
 if __name__ == '__main__':
-    color_to_be_tested = ["red","yellow","black","blue","green","white"]
+    color_to_be_tested = ["red","black","yellow","blue","green","white"]
     target_folder = 'data/car/21'
     search_color = Search_Color()
     for idx, color in enumerate(color_to_be_tested):
-        for file in os.listdir(target_folder + color):
+        print '------------------------------' + color
+        for file in os.listdir(os.path.join(target_folder,color)):
             if(file != os.path.basename("__file__")):
                 if(file[-3:] == 'jpg'):
-                    origin_img = cv2.imread(target_folder + color + '/' + file)
+                    img_path   = os.path.join(target_folder,color,file)
+                    origin_img = cv2.imread(img_path)
                     res = search_color.color_detection(origin_img,'car')
-                    print res
+                    print img_path,res
