@@ -4,40 +4,49 @@ A Color Detection Engine for Object Detector
 
 ## Getting Started
 
-Please have opencv2, PIL, numpy, matplotlib intalled in your system
+Please have opencv2, PIL, numpy, matplotlib, apscheduler==2.1.2 intalled in your system
 
-### Prerequisites
+## Prerequisites
+```
+# python2.7 is used.
+sudo apt-get -y install python-opencv libopencv-dev python-numpy python-dev
+sudo pip install matplotlib apscheduler==2.1.2 Pillow
+```
 
-Please have opencv2, PIL, numpy, matplotlib intalled in your system
+## Running the demo
 
-
-## Running the tests
-
-'''
+```
+# input test.jpg
 python search_color.py
-'''
+# input group of test images
+unzip data/car.zip
+python demo.py
+```
 
-### Running the evaluation
+## Running the evaluation
 
 Explain what these tests test and why
 
 ```
-python tools/color_Eval.py
+python tools/color_eval.py
 ```
 
-### Running optimization over a new dataset
+## Running optimization over a new dataset
 
-'''
+```
 mv 'your dataset' tools/opt_color/.
 config target folder in tools/opt_color/config.py
 cd tools/opt_color
 python opt_color.py
 ```
 
-## Deployment
+## Docker
 
-Add additional notes about how to deploy this on a live system
-
+```
+cd docker
+cp ~/.ssh/id_rsa .
+docker build -t <name> .
+```
 
 ## Authors
 
