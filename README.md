@@ -50,4 +50,4 @@ docker build -t <name> .
 
 ## Authors
 
-* **TsungJen Hsu**
+TsungJen Hsu
