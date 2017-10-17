@@ -30,6 +30,13 @@ Explain what these tests test and why
 ```
 python tools/color_eval.py
 ```
+### Evaluation results
+### Face color detection:
+
+| Center-aligned | Center-aligned | Right-aligned |
+| Face         |     dark skin      |     light skin |
+| False positive   | 3/55 ~= 5%     | 11/36 ~= 31%   |
+| False negative     | 12/36 ~= 33%       | 2/55~= 4%    |
 
 ## Running optimization over a new dataset
 
