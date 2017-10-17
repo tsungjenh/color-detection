@@ -1,14 +1,14 @@
 { "color_to_be_detected": ["lightskin","darkskin"],
     "range": {
-        "lightskin": [[0, 58, 40], [35, 174, 255]],
-        "darkskin": [[0, 99,0],[145,190,160]]
+        "lightskin": [[33, 11, 38], [117, 129, 181]],
+        "darkskin": [[6, 74,19],[152,177,226]]
         },
     "threshold": {
-        "lightskin": 0.15,
-        "darskin": 0.124
+        "lightskin": 0.368,
+        "darkskin": 0.15
         },
     "roi_scale": {
-        "lightskin": 8,
-        "darkskin": 7.56
+        "lightskin": 7.19,
+        "darkskin": 9.82
         }
     }

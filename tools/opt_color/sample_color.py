@@ -6,7 +6,7 @@ from search_color import Search_Color
 #search_color = PS_Search_Color()
 
 search_color = Search_Color()
-def sample_color(threshold, roiScale, filtratio, color_param, color2opt):
+def sample_color(threshold, roiScale, filtratio, color_param, color2opt, detect_type):
 
     clr_idx = colorset.index(color2opt)
 
@@ -21,16 +21,16 @@ def sample_color(threshold, roiScale, filtratio, color_param, color2opt):
                 if(file[-3:] == 'jpg'):
 
                     origin_img = cv2.imread(target_folder + color + '/' + file)
-
-                    res = search_color.color_detection(origin_img, color2opt, roiScale, filtratio, color_param, 'person')
+                    res = search_color.color_detection(origin_img, color2opt, roiScale, filtratio, color_param, threshold, detect_type)
 
                     total += 1
-
-                    if res>=threshold and clr_idx != idx:
-                        fp = fp +1
-                    elif clr_idx == idx:
+                    res_arr = res.split(',')
+                    if color2opt != color:
+                        if color2opt in res_arr:
+                            fp += 1
+                    else:
                         this_color_count += 1
-                        if res<threshold:
-                            fn = fn + 1
+                        if color2opt not in res_arr:
+                            fn += 1
 
     return total,this_color_count,fp,fn

@@ -18,6 +18,7 @@ from image_process.get_roi            import get_roi
 from apscheduler.scheduler            import Scheduler
 import datetime
 import logging
+import operator
 logging.basicConfig()
 
 sched = Scheduler()
@@ -29,7 +30,7 @@ class Search_Color:
         """ class instance initialization """
         self.cls_has_night  = cls_has_night
         self.detect_cls     = detect_cls
-        self.isNight        = True
+        self.isNight        = False
         self.imgcache       = { cls: deque() for cls in self.detect_cls}
         self.profile        = {}
         for cls in detect_cls:
@@ -90,27 +91,29 @@ class Search_Color:
 
         res = ''
 
+
         # loop over all the color to be detected
         for (idx, color) in enumerate(color_to_be_detected):
 
-            if detect_type in do_lamp_filter:
-                filtratio = cur_profile['filtratio'][color]
-                (frame, lightMask) = lamp_filter(frame_in, filtratio)
-                blockedPxl = sum(np.count_nonzero(e) for e in lightMask)
-            else:
-                frame = frame_in
-                blockedPxl = 0
 
             if detect_type in do_get_roi:
                 roi_scale = cur_profile['roi_scale']
                 if self.isNight:
                     roi_scale = roi_scale[color]
-                frame = get_roi(frame, roi_scale)
+                frame = get_roi(frame_in, roi_scale)
             else:
                 frame = frame_in
 
+            if detect_type in do_lamp_filter and self.isNight == True:
+                filtratio = cur_profile['filtratio'][color]
+                (frame, lightMask) = lamp_filter(frame, filtratio)
+                blockedPxl = sum(np.count_nonzero(e) for e in lightMask)
+            else:
+                frame = frame
+                blockedPxl = 0
+
             (src_height, src_width, src_channels) = frame.shape
-            max_value = (src_height * src_width - blockedPxl) * 255
+            max_value = ((src_height * src_width) - blockedPxl) * 255
             hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
 
             color_boundaries = cur_profile['range'][color]
@@ -122,12 +125,12 @@ class Search_Color:
                 # detecting...
                 mask = mask + cv2.inRange(hsv, np.array(lower),np.array(upper))
 
-            if float(max_value) != 0:
+            if(float(max_value) != 0):
                 Val = float(mask.sum()) / float(max_value)
             else:
                 Val = 0
-
-            if round(Val,2) >= cur_profile['threshold'][color]:
+            if Val >= cur_profile['threshold'][color]:
+                #print Val
                 if res != '':
                     res = res + ','
                 res = res + color
@@ -137,5 +140,5 @@ class Search_Color:
 
 if __name__ == '__main__':
     search_color = Search_Color()
-    img = cv2.imread('test.jpg')
-    print search_color.color_detection(img,'car')
+    img = cv2.imread('test2.jpg')
+    search_color.color_detection(img,'car')

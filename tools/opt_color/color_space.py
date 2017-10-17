@@ -44,17 +44,21 @@ color_space_dict = {
         hp.uniform('white_v_lower',15,60),
     ],
     'color_space_darkskin' : [
-        hp.uniform('darkskin_s_lower',0,180),
-        hp.uniform('darkskin_h_upper',20,180),
-        hp.uniform('darkskin_s_upper',58,255),
-        hp.uniform('darkskin_v_upper', 20,255),
+        hp.uniform('darkskin_h_lower',0,180),
+        hp.uniform('darkskin_s_lower',0,255),
+        hp.uniform('darkskin_v_lower', 0,255),
+        hp.uniform('darkskin_h_upper',0,180),
+        hp.uniform('darkskin_s_upper',0,255),
+        hp.uniform('darkskin_v_upper', 0,255),
 
     ],
     'color_space_lightskin' : [
-        hp.uniform('lightskin_s_lower',0,120),
-        hp.uniform('lightskin_v_lower',0,255),
-        hp.uniform('lightskin_h_upper', 25,75),
-        hp.uniform('lightskin_s_upper',120,255),
+        hp.uniform('lightskin_h_lower',0,180),
+        hp.uniform('lightskin_s_lower',0,255),
+        hp.uniform('lightskin_v_lower', 0,255),
+        hp.uniform('lightskin_h_upper',0,180),
+        hp.uniform('lightskin_s_upper',0,255),
+        hp.uniform('lightskin_v_upper', 0,255),
     ],
 
 }

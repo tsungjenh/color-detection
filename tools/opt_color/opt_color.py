@@ -16,12 +16,14 @@ import os
 
 min = 1
 state = ''
+detect_type = 'car'
 # define an objective function
 def objective(args):
     global min
     global state
     global color
     global log
+    global detect_type
 
 
     threshold, roiScale, filtratio = args[0:3]
@@ -30,9 +32,10 @@ def objective(args):
 
     thr = 0.1 + threshold * 0.05
 
-    total,this_color_count,fp,fn = sample_color(thr, roiScale, filtratio, color_param,color)
+    total,this_color_count,fp,fn = sample_color(thr, roiScale, filtratio, color_param, color, detect_type)
+
     tp = total - fp - fn
-    beta = 5
+    beta = 0.8
 
     f1_score = float(((1 + beta**2) * tp)) / ((1 + beta**2)*tp + beta**2 * fn + fp)
 
@@ -67,12 +70,11 @@ for color in color2opt:
         print color
 
         space = base_space + color_space_dict['color_space_' + color]
-
         #pprint(trials.trials)
         print('\n')
 
         trials = Trials()
-        best = fmin(objective, space, algo=tpe.suggest, max_evals=6000,trials= trials)
+        best = fmin(objective, space, algo=tpe.suggest, max_evals=10000,trials= trials)
 
         pprint(best)
         print('\n')

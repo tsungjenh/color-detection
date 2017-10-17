@@ -11,7 +11,7 @@ from search_color import *
 
 def colorEval(base_folder, detect_type = 'car', color2Eval = ['all'], search_color = Search_Color()):
     color2test = []
-    colorset = ['red','black','yellow','blue','green','white',]
+    colorset = ["red","black","yellow","blue","green","white"]
 
     if 'all' in color2Eval:
         color2test = colorset
@@ -21,7 +21,6 @@ def colorEval(base_folder, detect_type = 'car', color2Eval = ['all'], search_col
                 color2test = color2test + [color]
             else:
                 print "[DEBUG MSG]: %s + 's detector not exists" % color
-
     fn = fp = [0] * len(color2test)
 
     for test_color in color2test:
@@ -37,22 +36,27 @@ def colorEval(base_folder, detect_type = 'car', color2Eval = ['all'], search_col
                 if(file != os.path.basename("__file__")):
                     if(file[-3:] == 'jpg'):
                         frame_in = cv2.imread(os.path.join(target_folder,file))
-                        res = search_color.color_detection(frame_in, 'car')
+                        res = search_color.color_detection(frame_in, detect_type)
+
+                        res_arr = res.split(',')
 
                         test_idx = colorset.index(test_color)
                         if test_color != color:
                             total_fp_test += 1
-                            if res[test_idx] == True:
+                            if test_color in res_arr:
                                 fp += 1
                         else:
                             total_fn_test += 1
-                            if res[test_idx] == False:
+                            if test_color not in res_arr:
+
                                 fn += 1
+
+
 
         print("%s:" %test_color)
         print("total_fp_test: %d fp:%d fp_rate:%f" %(total_fp_test,fp,fp/total_fp_test))
         print("total_fn_test: %d fn:%d fn_rate:%f" %(total_fn_test,fn,fn/total_fn_test))
 
 if __name__ == '__main__':
-    base_folder = '/home/max/ironyun_proj/color-detection/exp/color_data/car/21'
+    base_folder = 'data/color_data/12'
     colorEval(base_folder,'car')
