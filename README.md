@@ -1,4 +1,4 @@
-# iRONYUN Color Detection
+# Color Detection
 
 A Color Detection Engine for Object Detector
 
