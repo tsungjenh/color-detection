@@ -44,7 +44,6 @@ class Search_Color:
         """update isnight status which called every half hour"""
         imgcache = self.imgcache['car']
         res = [self.detectDark(img) for img in list(imgcache)]
-        print sum(res)/(len(res)*1.0)
         if sum(res)/(len(res)*1.0) > 0.55:
             print "[DEBUG MSG]: Switch status to day"
             self.isNight = False
@@ -90,12 +89,8 @@ class Search_Color:
             frame_in    = auto_white_balance(frame_in)
 
         res = ''
-
-
         # loop over all the color to be detected
         for (idx, color) in enumerate(color_to_be_detected):
-
-
             if detect_type in do_get_roi:
                 roi_scale = cur_profile['roi_scale']
                 if self.isNight:
@@ -134,7 +129,6 @@ class Search_Color:
                 if res != '':
                     res = res + ','
                 res = res + color
-
         return res
 
 
